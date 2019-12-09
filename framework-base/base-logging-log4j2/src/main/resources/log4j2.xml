@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出。
+    monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数。
+-->
+<configuration status="error" monitorInterval="3">
+    <!--先定义所有的appender-->
+    <appenders>
+        <!--这个输出控制台的配置-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!--这个都知道是输出日志的格式-->
+            <!--
+              http://logging.apache.org/log4j/2.x/manual/layouts.html
+              格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符
+              %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
+            -->
+            <PatternLayout charset="UTF-8"
+                           pattern="  Level: [%highlight{%p}{FATAL=Red, ERROR=Magenta, WARN=Yellow, INFO=Green, DEBUG=Cyan, TRACE=White}]   Time: [%style{%d}{bright,blue}]%n Method: [%style{%l}{bright,white}] %nMessage: %highlight{%m%n%n}{FATAL=Bright Red, ERROR=Bright Magenta, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White}" disableAnsi="false" noConsoleNoAnsi="false"></PatternLayout>
+        </Console>
+<!--        &lt;!&ndash;文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用&ndash;&gt;
+        <File name="TestLog" fileName="/opt/logs/test.log" append="false">
+            <PatternLayout charset="UTF-8" pattern="%n  Level: %p   Time: %d%n Method: %l %nMessage: %m%n"/>
+        </File>
+        &lt;!&ndash; 这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档&ndash;&gt;
+        <RollingFile name="RollingFile"
+                     fileName="/opt/logs/app.log"
+                     filePattern="/opt/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout charset="UTF-8" pattern="%n  Level: %p   Time: %d%n Method: %l %nMessage: %m%n"/>
+            <SizeBasedTriggeringPolicy size="100MB"/>
+            &lt;!&ndash; DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了10 &ndash;&gt;
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>-->
+    </appenders>
+    <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+    <loggers>
+        <!--包下的日志输出策略，输出debug级别及以上级别的日志到控制台和文件-->
+        <logger name="org.apache" level="warn" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>
+        <logger name="org.quartz" level="warn" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>
+        <logger name="springfox.documentation" level="warn" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>
+        <logger name="org.springframework.core" level="warn" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>
+        <logger name="org.springframework.beans" level="warn" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>
+        <logger name="org.eclipse.jetty" level="warn" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>
+        <logger name="org.springframework.aop" level="warn" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>
+        <logger name="org.springframework.web" level="info" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>
+        <logger name="org.springframework.context" level="warn" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>
+        <logger name="org.springframework.test" level="warn" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>
+        <logger name="org.springframework.boot.autoconfigure" level="warn" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>
+        <logger name="org.springframework.web.servlet.handler.AbstractHandlerMethodMapping" level="debug" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>
+        <!--建立一个默认的root的logger - 其它日志输出策略 -->
+        <root level="Info">
+            <appender-ref ref="Console"/>
+        </root>
+    </loggers>
+</configuration>
