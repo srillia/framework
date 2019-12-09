@@ -91,7 +91,7 @@ subprojects {
 
         //禁止上传，只让属于api模块上传
         tasks.getByName("uploadArchives").enabled = false
-        if(it.parent.name.contains("framework-api")) {
+        if(it.parent.name.contains("framework-base")) {
             tasks.getByName("uploadArchives").enabled = true
         }
 

@@ -1,3 +1,8 @@
 dependencies {
-    
+    compile project(":framework-base:base-common-kit")
+    compile 'org.springframework.boot:spring-boot-starter'
+    compile 'org.springframework.boot:spring-boot-starter-amqp'
+    compile "cglib:cglib:${cglibVersion}"
+    //单元测试支持
+    compile "junit:junit:${junitVersion}"
 }

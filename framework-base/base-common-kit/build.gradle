@@ -1,3 +1,8 @@
 dependencies {
-    
+    //fastjson 是一个性能很好的 Java 语言实现的 JSON 解析器和生成器
+    compile "com.alibaba:fastjson:${fastjsonVersion}"
+    //jsoup 用于解析和遍历 html 文档
+    compile "org.jsoup:jsoup:${jsoupVersion}"
+    //第三方常用工具包
+    compile "cn.hutool:hutool-all:${hutoolVersion}"
 }

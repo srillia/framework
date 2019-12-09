@@ -1,3 +1,8 @@
 dependencies {
-    
+    //spring context
+    compile ("org.springframework:spring-context")
+    //单元测试支持
+    compile "junit:junit:${junitVersion}"
+    //测试框架
+    compile "org.springframework.boot:spring-boot-starter-test:${springbootVersion}"
 }
