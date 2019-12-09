@@ -60,6 +60,9 @@ public class RpcServerHandler implements ChannelAwareMessageListener, Initializi
     public void afterPropertiesSet() {
         // 初始化所有接口
         Class<?> rpcServerClass = this.rpcServerBean.getClass();
+        if(this.rpcServerBean.getClass().getName().contains("CGLIB")) {
+            rpcServerClass = this.rpcServerBean.getClass().getSuperclass();
+        }
         for (Method targetMethod : rpcServerClass.getMethods()) {
             if (targetMethod != null && targetMethod.isAnnotationPresent(RpcServerMethod.class)) {
                 String methodName = targetMethod.getAnnotation(RpcServerMethod.class).value();
