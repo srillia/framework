@@ -44,7 +44,7 @@ public class ResultBean<T> implements Serializable {
     }
 
     /**
-     * 返回成功结果集对象
+     * 创建结果集对象
      *
      * @return 当前对象
      */
@@ -69,6 +69,35 @@ public class ResultBean<T> implements Serializable {
     public static ResultBean fail() {
         return new ResultBean(BaseCode.fail).setSuccess(false);
     }
+
+
+    /**
+     * 返回空结果集对象
+     *
+     * @return 当前对象
+     */
+    public static ResultBean blank() {
+        return new ResultBean(BaseCode.notFound).setSuccess(false);
+    }
+
+    /**
+     * 返回异常结果集对象
+     *
+     * @return 当前对象
+     */
+    public static ResultBean exception() {
+        return new ResultBean(BaseCode.exception).setSuccess(false);
+    }
+
+    /**
+     * 返回返回登录结果集对象
+     *
+     * @return 当前对象
+     */
+    public static ResultBean notlogin() {
+        return new ResultBean(BaseCode.notLogin).setSuccess(false);
+    }
+
 
     public int getCode() {
         return code;

@@ -1,5 +1,7 @@
 package net.unsun.infrastructure.common.kit;
 
+import net.unsun.infrastructure.common.constant.BaseCode;
+
 import java.util.List;
 
 /**
@@ -34,6 +36,53 @@ public class PageResultBean<T> extends ResultBean<T> {
         return new PageResultBean();
     }
 
+
+    /**
+     * 返回成功结果集对象
+     *
+     * @return 当前对象
+     */
+    public static PageResultBean success() {
+        return new PageResultBean().setCode(BaseCode.success);
+    }
+
+    /**
+     * 返回失败结果集对象
+     *
+     * @return 当前对象
+     */
+    public static PageResultBean fail() {
+        return new PageResultBean().setCode(BaseCode.fail).setSuccess(false);
+    }
+
+    /**
+     * 返回空结果集对象
+     *
+     * @return 当前对象
+     */
+    public static PageResultBean blank() {
+        return new PageResultBean().setCode(BaseCode.notFound).setSuccess(false);
+    }
+
+    /**
+     * 返回异常结果集对象
+     *
+     * @return 当前对象
+     */
+    public static ResultBean exception() {
+        return new PageResultBean().setCode(BaseCode.exception).setSuccess(false);
+    }
+
+    /**
+     * 返回返回登录结果集对象
+     *
+     * @return 当前对象
+     */
+    public static ResultBean notlogin() {
+        return new PageResultBean().setCode(BaseCode.notLogin).setSuccess(false);
+    }
+
+
     public PageBean getPagination() {
         return pagination;
     }
@@ -49,6 +98,30 @@ public class PageResultBean<T> extends ResultBean<T> {
 
     public PageResultBean<T> setList(List<T> list) {
         this.list = list;
+        return this;
+    }
+
+    @Override
+    public PageResultBean<T> setCode(BaseCode baseCode) {
+        super.setCode(baseCode);
+        return this;
+    }
+
+    @Override
+    public PageResultBean<T> setMessage(String message) {
+        super.setMessage(message);
+        return this;
+    }
+
+    @Override
+    public PageResultBean<T> setData(T data) {
+        super.setData(data);
+        return this;
+    }
+
+    @Override
+    public PageResultBean<T> setSuccess(Boolean success) {
+        super.setSuccess(success);
         return this;
     }
 
