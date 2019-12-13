@@ -2,6 +2,7 @@ package net.unsun.infrastructure.rpc.server;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.rabbitmq.client.AMQP.BasicProperties;
 import com.rabbitmq.client.Channel;
@@ -135,22 +136,14 @@ public class RpcServerHandler implements ChannelAwareMessageListener, Initializi
                         LOGGER.warn("Duration: " + offset + "ms, " + this.rpcType.getName() + "-RpcServer-" + this.rpcName + ", Method: " + command + ", Call Slowing");
                     }
                     resultJson.put("_data",result);
-                    if(result.getClass().getName() == ResultBean.class.getName()) {
-                        resultJson.put("_class",ResultBean.class.getName());
-                    }
-                    if(result.getClass().getName() == PageResultBean.class.getName()) {
-                        resultJson.put("_class",PageResultBean.class.getName());
-                    }
                 }
 
             } catch (InvocationTargetException e) {
-                // 获取目标异常
-                Throwable t = e.getTargetException();
                 LOGGER.error("Method Invoke Target Exception! Received: " + messageStr);
-                LOGGER.error(t.getMessage(), t);
+                e.printStackTrace();
             } catch (Exception e) {
                 LOGGER.error("Method Invoke Exception! Received: " + messageStr);
-                LOGGER.error(e.getMessage(), e);
+                e.printStackTrace();
             }
             // 构建配置
             BasicProperties replyProps = new BasicProperties.Builder().correlationId(messageProperties.getCorrelationId()).contentEncoding(StandardCharsets.UTF_8.name()).contentType(messageProperties.getContentType()).build();
@@ -158,7 +151,7 @@ public class RpcServerHandler implements ChannelAwareMessageListener, Initializi
             channel.basicPublish(messageProperties.getReplyToAddress().getExchangeName(), messageProperties.getReplyToAddress().getRoutingKey(), replyProps, resultJson.toJSONString().getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
             LOGGER.error(this.rpcType.getName() + "-RpcServer-" + this.rpcName + " Exception! Received: " + messageStr);
-            LOGGER.error(e.getMessage(), e);
+            e.printStackTrace();
         } finally {
             // 确认处理任务
             if (messageProperties != null) {
@@ -188,28 +181,24 @@ public class RpcServerHandler implements ChannelAwareMessageListener, Initializi
 
     private List convertParamsTypes(String command, JSONObject data) {
         List args = new ArrayList();
-        for (Method targetMethod : this.rpcServerBean.getClass().getMethods()) {
+        Class<?> targetClazz = rpcServerBean.getClass();
+        if(rpcServerBean.getClass().getName().contains("CGLIB")) {
+            targetClazz = rpcServerBean.getClass().getSuperclass();
+        }
+        for (Method targetMethod : targetClazz.getMethods()) {
             if (targetMethod.getName().equals(command)) {
                 Parameter[] parameters = targetMethod.getParameters();
                 for (int j = 0; j < parameters.length; j++) {
-                    String json = data.getString(String.valueOf(j));
+                    String param = data.getString(String.valueOf(j));
                     Class _class = parameters[j].getType();
-                    if(!StringUtils.isEmpty(json)) {
-                        if (Collection.class.isAssignableFrom(_class)) {
-                            args.add(Arrays.asList(JSONArray.parseArray(json).toArray()));
-                        } else if (_class.isEnum()) {
-                            //to do
-                        } else if (_class.isArray()) {
-                            args.add(JSONArray.parseArray(json).toArray());
-                        } else if (CharSequence.class.isAssignableFrom(_class)) {
-                            args.add(json);
-                        } else if (Map.class.isAssignableFrom(_class)) {
-                            args.add(JSON.parseObject(json, Map.class));
-                        } else {
-                            args.add(JSON.toJavaObject(JSON.parseObject(json), _class));
+                    if(!StringUtils.isEmpty(param)) {
+                        try {
+                            args.add(JSON.parseObject(param, _class));
+                        } catch (JSONException e) {
+                            args.add(JSON.parseObject(JSON.toJSONString(param), _class));
                         }
                     } else {
-                        args.add(json);
+                        args.add(param);
                     }
                 }
             }

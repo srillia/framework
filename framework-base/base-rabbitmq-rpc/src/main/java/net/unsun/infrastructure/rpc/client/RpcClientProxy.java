@@ -7,6 +7,7 @@ import net.unsun.infrastructure.common.kit.PageResultBean;
 import net.unsun.infrastructure.common.kit.ResultBean;
 import net.unsun.infrastructure.rpc.annotation.RpcClientMethod;
 import net.unsun.infrastructure.rpc.entity.RpcType;
+import net.unsun.infrastructure.rpc.util.ParamsConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -16,6 +17,9 @@ import org.springframework.util.StringUtils;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * RpcClientProxy
@@ -54,10 +58,10 @@ public class RpcClientProxy implements InvocationHandler {
         }
 
 
-        if (methodRpcType == RpcType.ASYNC && method.getGenericReturnType() != void.class) {
-            throw new RuntimeException("ASYNC-RpcClient 返回类型只能为 void, Clas s: " + this.rpcClientInterface.getName() + ", Method: " + method.getName());
+        if (methodRpcType == RpcType.ASYNC && method.getReturnType() != void.class) {
+            throw new RuntimeException("ASYNC-RpcClient 返回类型只能为 void, Class: " + this.rpcClientInterface.getName() + ", Method: " + method.getName());
         }
-        if (methodRpcType == RpcType.SYNC && (method.getGenericReturnType() != ResultBean.class && method.getGenericReturnType() != PageResultBean.class)) {
+        if (methodRpcType == RpcType.SYNC && (method.getReturnType() != ResultBean.class && method.getReturnType() != PageResultBean.class)) {
             throw new RuntimeException("SYNC-RpcClient 返回类型只能为 ResultBean 或者 PageResultBean, Class: " + this.rpcClientInterface.getName() + ", Method: " + method.getName());
         }
         String methodName = rpcClientMethod.value();
@@ -96,38 +100,19 @@ public class RpcClientProxy implements InvocationHandler {
             if (resultJsonStr == null) {
                 // 无返回任何结果，说明服务器负载过高，没有及时处理请求，导致超时
                 LOGGER.error("Duration: " + (System.currentTimeMillis() - start) + "ms, " + methodRpcType.getName() + "-RpcClient-" + this.rpcName + ", Method: " + methodName + " Service Unavailable, Param: " + paramDataJsonString);
-                return ResultBean.fail().setMessage("rpc 超时");
+                throw new RuntimeException("请求超时");
             }
             // 获取调用结果的状态
             JSONObject resultJson = JSONObject.parseObject(resultJsonStr.toString());
             //int status = resultJson.getIntValue("status");
-            Object _data = resultJson.get("_data");
-            Object _class = resultJson.get("_class");
+            JSONObject _data = resultJson.getJSONObject("_data");
 
-            if(_data != null && _class != null && _class.toString().equals(ResultBean.class.getName())) {
-                return JSON.parseObject(_data.toString(), ResultBean.class);
-            }
-            if(_data != null && _class != null && _class.toString().equals(PageResultBean.class.getName())) {
-                return JSON.parseObject(_data.toString(), PageResultBean.class);
-            }
+            return ParamsConverter.convertReturnType(method, _data);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-        if(method.getReturnType() == ResultBean.class) {
-            return ResultBean.fail().setMessage("rpc,没有返回值");
-        }
-        if(method.getReturnType() == PageResultBean.class){
-            PageResultBean pageResultBean = PageResultBean.create();
-            pageResultBean.setCode(BaseCode.fail);
-            pageResultBean.setMessage("pc,没有返回值");
-            return pageResultBean;
-        }
-
-        if(method.getReturnType() == void.class){
-          return null;
-        } else {
-            return null;
-        }
+        return null;
     }
+
 }

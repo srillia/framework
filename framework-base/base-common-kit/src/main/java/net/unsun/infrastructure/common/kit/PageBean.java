@@ -8,7 +8,7 @@ import java.util.Map;
  *
  * @author Tokey
  */
-public class PageBean implements Serializable {
+public class PageBean<T> implements Serializable {
 
     /***
      * 当前页
@@ -33,6 +33,12 @@ public class PageBean implements Serializable {
      * b false ---> b desc
      */
     private Map<String, Boolean> orderBy;
+
+
+    /**
+     * 条件查寻的条件
+     */
+    private T condition;
 
     /**
      * 实例当前对象
@@ -194,7 +200,13 @@ public class PageBean implements Serializable {
         return end;
     }
 
+    public T getCondition() {
+        return condition;
+    }
 
+    public void setCondition(T condition) {
+        this.condition = condition;
+    }
 
     @Override
     public String toString() {
