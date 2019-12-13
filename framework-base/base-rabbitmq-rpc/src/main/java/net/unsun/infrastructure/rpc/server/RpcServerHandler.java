@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -190,12 +191,12 @@ public class RpcServerHandler implements ChannelAwareMessageListener, Initializi
                 Parameter[] parameters = targetMethod.getParameters();
                 for (int j = 0; j < parameters.length; j++) {
                     String param = data.getString(String.valueOf(j));
-                    Class _class = parameters[j].getType();
+                    Type type = parameters[j].getParameterizedType();
                     if(!StringUtils.isEmpty(param)) {
                         try {
-                            args.add(JSON.parseObject(param, _class));
+                            args.add(JSON.parseObject(param, type));
                         } catch (JSONException e) {
-                            args.add(JSON.parseObject(JSON.toJSONString(param), _class));
+                            args.add(JSON.parseObject(JSON.toJSONString(param), type));
                         }
                     } else {
                         args.add(param);

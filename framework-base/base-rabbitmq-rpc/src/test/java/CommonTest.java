@@ -1,9 +1,13 @@
 import net.unsun.infrastructure.common.constant.BaseCode;
 import net.unsun.infrastructure.common.kit.PageResultBean;
 import net.unsun.infrastructure.common.kit.ResultBean;
+import net.unsun.infrastructure.rpc.entity.ErrorCode;
 import org.junit.Test;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @program: unsun-framework
@@ -20,6 +24,7 @@ public class CommonTest {
         System.out.println(name);
         System.out.println(name2);
         System.out.println(name3);
+        List<ErrorCode> list = new ArrayList<>();
 
 //        System.out.println((PageResultBean)ResultBean.fail().setMessage("rpc,没有返回值"));
 
