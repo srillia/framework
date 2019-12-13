@@ -69,7 +69,7 @@ public class PageResultBean<T> extends ResultBean<T> {
      *
      * @return 当前对象
      */
-    public static ResultBean exception() {
+    public static PageResultBean exception() {
         return new PageResultBean().setCode(BaseCode.exception).setSuccess(false);
     }
 
@@ -78,7 +78,7 @@ public class PageResultBean<T> extends ResultBean<T> {
      *
      * @return 当前对象
      */
-    public static ResultBean notlogin() {
+    public static PageResultBean notlogin() {
         return new PageResultBean().setCode(BaseCode.notLogin).setSuccess(false);
     }
 
