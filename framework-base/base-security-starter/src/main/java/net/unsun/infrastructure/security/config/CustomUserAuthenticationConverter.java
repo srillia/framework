@@ -35,7 +35,7 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
             Object authorities = map.get("authorities");
             List<GrantedAuthority> grantedAuthorities = null;
             if(authorities != null) {
-                Set<String> roles = (Set<String>)authorities;
+                List<String> roles = (List<String>)authorities;
                 grantedAuthorities = new ArrayList<>(roles.size());
 
                 for (String authority : roles) {
@@ -44,7 +44,7 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
             }
             UserDetail user = new UserDetail(username,"", grantedAuthorities);
             user.setUserId(Long.parseLong(map.get("userId").toString()));
-            return new UsernamePasswordAuthenticationToken(user, N_A, AuthorityUtils.commaSeparatedStringToAuthorityList("xxxxxxxx"));
+            return new UsernamePasswordAuthenticationToken(user, N_A, grantedAuthorities);
         }
         return null;
     }
