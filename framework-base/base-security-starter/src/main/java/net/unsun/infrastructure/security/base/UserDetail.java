@@ -11,18 +11,17 @@ import java.util.Collection;
  * @create: 2019-11-26 17:51
  */
 public class UserDetail extends User {
-
     /**
-     *
+     * 用户id
      */
-    private static final long serialVersionUID = 7589191160462204999L;
-    /**
-     *
-     */
-    public Long userId;
+    private Long userId;
 
     public UserDetail(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
+    }
+
+    public UserDetail(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }
 
     public Long getUserId() {
