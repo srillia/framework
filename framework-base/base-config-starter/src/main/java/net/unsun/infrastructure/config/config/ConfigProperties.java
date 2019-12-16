@@ -1,4 +1,4 @@
-package net.unsun.infrastructure.config.autoconfigure;
+package net.unsun.infrastructure.config.config;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

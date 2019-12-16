@@ -1,9 +1,6 @@
 dependencies {
     compile project(":framework-base:base-common-kit")
     compile project(":framework-base:base-logging-log4j2")
-    compile project(":framework-base:base-security-starter")
     compile 'org.springframework.boot:spring-boot-starter'
     compile "org.springframework.boot:spring-boot-starter-web"
-    //集成mybatis-plus
-    compile "com.baomidou:mybatis-plus:${mybatisplusVersion}"
 }

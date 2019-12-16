@@ -1,17 +1,12 @@
-package net.unsun.infrastructure.config.mybatis.plus;
+package net.unsun.infrastructure.security.mybatis.plus.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import net.unsun.infrastructure.security.base.UserDetail;
 import net.unsun.infrastructure.security.util.SecurityKit;
 import org.apache.ibatis.reflection.MetaObject;
-import org.mybatis.logging.Logger;
-import org.mybatis.logging.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @program: unsun-framework
