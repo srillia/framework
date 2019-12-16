@@ -3,10 +3,15 @@ package net.unsun.infrastructure.security.config;
 import net.unsun.infrastructure.security.base.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @program: unsun-framework
@@ -27,11 +32,18 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
         if (map.containsKey(USERNAME)) {
 
             String username = (String) map.get(USERNAME);
-            UserDetail user = new UserDetail(username,"", AuthorityUtils.commaSeparatedStringToAuthorityList("xxxxxxxx"));
-            user.setUserId(Long.parseLong(map.get("id").toString()));
-            user.setUserAvatar(map.get("userAvatar") == null ? null:map.get("userAvatar").toString());
-            user.setUserAccount(map.get("userAccount") == null ? null:map.get("userAccount").toString());
-            user.setUserNickname(map.get("userNickname") == null ? null:map.get("userNickname").toString());
+            Object authorities = map.get("authorities");
+            List<GrantedAuthority> grantedAuthorities = null;
+            if(authorities != null) {
+                Set<String> roles = (Set<String>)authorities;
+                grantedAuthorities = new ArrayList<>(roles.size());
+
+                for (String authority : roles) {
+                    grantedAuthorities.add(new SimpleGrantedAuthority(authority));
+                }
+            }
+            UserDetail user = new UserDetail(username,"", grantedAuthorities);
+            user.setUserId(Long.parseLong(map.get("userId").toString()));
             return new UsernamePasswordAuthenticationToken(user, N_A, AuthorityUtils.commaSeparatedStringToAuthorityList("xxxxxxxx"));
         }
         return null;
