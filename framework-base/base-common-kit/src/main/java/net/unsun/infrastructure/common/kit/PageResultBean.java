@@ -100,6 +100,17 @@ public class PageResultBean<T> extends ResultBean<T> {
         return new PageResultBean().setCode(BaseCode.authFeiled).setSuccess(false);
     }
 
+    /**
+     * 返回返回没有授权结果集对象
+     *
+     * @return 当前对象
+     */
+    public static PageResultBean notPermited() {
+        return new PageResultBean().setCode(BaseCode.notPermited).setSuccess(false);
+    }
+
+
+
 
 
     public PageBean getPagination() {

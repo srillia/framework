@@ -14,12 +14,12 @@ import java.io.Serializable;
 public class ResultBean<T> implements Serializable {
 
     /**
-     * 状态码：-1 参数校验错误；1 成功；2 失败 3 系统繁忙 4 空数据; 5异常 6未登录 7 认证授权失败
+     * 状态码：-1 参数校验错误；1 成功；2 失败 3 系统繁忙 4 空数据; 5异常 6未登录 7 认证失败
      */
     private int code = BaseCode.success.getCode();
 
     /**
-     * 状态码：-1 参数校验错误；1 成功；2 失败 3 系统繁忙 4 空数据; 5异常 6未登录 7 认证授权失败
+     * 状态码：-1 参数校验错误；1 成功；2 失败 3 系统繁忙 4 空数据; 5异常 6未登录 7 认证失败
      */
     private String codeExplain = BaseCode.success.getCodeExplain();
     /**
@@ -117,6 +117,16 @@ public class ResultBean<T> implements Serializable {
         return new ResultBean(BaseCode.authFeiled).setSuccess(false);
     }
 
+    /**
+     * 返回返回没有授权结果集对象
+     *
+     * @return 当前对象
+     */
+    public static ResultBean notPermited() {
+        return new ResultBean(BaseCode.notPermited).setSuccess(false);
+    }
+
+
 
 
     public int getCode() {
@@ -157,6 +167,9 @@ public class ResultBean<T> implements Serializable {
         return this;
     }
 
+    public String getCodeExplain() {
+        return codeExplain;
+    }
 
     @Override
     public String toString() {

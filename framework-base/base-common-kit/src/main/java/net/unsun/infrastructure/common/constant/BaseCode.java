@@ -18,7 +18,8 @@ public enum BaseCode implements Serializable {
     notFound(4,"未找到对应结果"),
     exception(5,"发生异常"),
     notLogin(6,"您还未登录"),
-    authFeiled(7,"认证授权失败");
+    authFeiled(7,"认证失败"),
+    notPermited(8,"没有授权");
 
     int code;
 
