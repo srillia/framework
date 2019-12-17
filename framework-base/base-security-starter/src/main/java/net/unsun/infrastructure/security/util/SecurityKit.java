@@ -2,8 +2,11 @@ package net.unsun.infrastructure.security.util;
 
 import net.unsun.infrastructure.security.base.UserDetail;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+
 /**
  * @program: unsun-framework
  * @author: Tokey
@@ -24,6 +27,32 @@ public class SecurityKit extends SecurityContextHolder {
             return false;
         }
         return getContext().getAuthentication().isAuthenticated();
+    }
+
+    /**
+     * 获取当前系统登陆用户账号
+     *
+     * @return 用户账号
+     */
+    public static boolean isLogin() {
+        if (!isAuthenticated()) {
+            return false;
+        }
+        UserDetail userDetail = (UserDetail) getContext().getAuthentication().getPrincipal();
+        if(userDetail == null) {
+            return false;
+        }
+        Collection<GrantedAuthority> authorities = userDetail.getAuthorities();
+        if(authorities == null || authorities.size() == 0) {
+            return false;
+        }
+        for (GrantedAuthority authority : authorities) {
+            //不需要登录的用户
+            if("ANONYMOUS".equals(authority.getAuthority())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
