@@ -14,10 +14,11 @@ public enum BaseCode implements Serializable {
     illegalArgument(-1,"参数校验失败"),
     success(1,"操作成功"),
     fail(2,"操作失败"),
+    systemBusy(3,"系统繁忙"),
     notFound(4,"未找到对应结果"),
     exception(5,"发生异常"),
     notLogin(6,"您还未登录"),
-    systemBusy(7,"系统繁忙");
+    authFeiled(7,"认证授权失败");
 
     int code;
 

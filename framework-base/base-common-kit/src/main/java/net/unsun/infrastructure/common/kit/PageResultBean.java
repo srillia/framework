@@ -65,6 +65,15 @@ public class PageResultBean<T> extends ResultBean<T> {
     }
 
     /**
+     * 返回系统繁忙结果集对象
+     *
+     * @return 当前对象
+     */
+    public static PageResultBean systemBusy() {
+        return new PageResultBean().setCode(BaseCode.systemBusy).setSuccess(false);
+    }
+
+    /**
      * 返回异常结果集对象
      *
      * @return 当前对象
@@ -74,13 +83,23 @@ public class PageResultBean<T> extends ResultBean<T> {
     }
 
     /**
-     * 返回返回登录结果集对象
+     * 返回返回未登录结果集对象
      *
      * @return 当前对象
      */
     public static PageResultBean notlogin() {
         return new PageResultBean().setCode(BaseCode.notLogin).setSuccess(false);
     }
+
+    /**
+     * 返回返回认证失败结果集对象
+     *
+     * @return 当前对象
+     */
+    public static PageResultBean authFeiled() {
+        return new PageResultBean().setCode(BaseCode.authFeiled).setSuccess(false);
+    }
+
 
 
     public PageBean getPagination() {
