@@ -43,7 +43,7 @@ public class PageResultBean<T> extends ResultBean<T> {
      * @return 当前对象
      */
     public static PageResultBean success() {
-        return new PageResultBean().setCode(BaseCode.success);
+        return new PageResultBean().setMessage(BaseCode.success.getCodeExplain()).setCode(BaseCode.success);
     }
 
     /**
@@ -52,7 +52,7 @@ public class PageResultBean<T> extends ResultBean<T> {
      * @return 当前对象
      */
     public static PageResultBean fail() {
-        return new PageResultBean().setCode(BaseCode.fail).setSuccess(false);
+        return new PageResultBean().setCode(BaseCode.fail).setMessage(BaseCode.fail.getCodeExplain()).setSuccess(false);
     }
 
     /**
@@ -61,7 +61,7 @@ public class PageResultBean<T> extends ResultBean<T> {
      * @return 当前对象
      */
     public static PageResultBean blank() {
-        return new PageResultBean().setCode(BaseCode.notFound).setSuccess(false);
+        return new PageResultBean().setCode(BaseCode.blank).setMessage(BaseCode.blank.getCodeExplain()).setSuccess(false);
     }
 
     /**
@@ -70,7 +70,7 @@ public class PageResultBean<T> extends ResultBean<T> {
      * @return 当前对象
      */
     public static PageResultBean systemBusy() {
-        return new PageResultBean().setCode(BaseCode.systemBusy).setSuccess(false);
+        return new PageResultBean().setCode(BaseCode.systemBusy).setMessage(BaseCode.systemBusy.getCodeExplain()).setSuccess(false);
     }
 
     /**
@@ -79,7 +79,7 @@ public class PageResultBean<T> extends ResultBean<T> {
      * @return 当前对象
      */
     public static PageResultBean exception() {
-        return new PageResultBean().setCode(BaseCode.exception).setSuccess(false);
+        return new PageResultBean().setCode(BaseCode.exception).setMessage(BaseCode.exception.getCodeExplain()).setSuccess(false);
     }
 
     /**
@@ -88,7 +88,7 @@ public class PageResultBean<T> extends ResultBean<T> {
      * @return 当前对象
      */
     public static PageResultBean notlogin() {
-        return new PageResultBean().setCode(BaseCode.notLogin).setSuccess(false);
+        return new PageResultBean().setCode(BaseCode.notLogin).setMessage(BaseCode.notLogin.getCodeExplain()).setSuccess(false);
     }
 
     /**
@@ -97,7 +97,7 @@ public class PageResultBean<T> extends ResultBean<T> {
      * @return 当前对象
      */
     public static PageResultBean authFeiled() {
-        return new PageResultBean().setCode(BaseCode.authFeiled).setSuccess(false);
+        return new PageResultBean().setCode(BaseCode.authFeiled).setMessage(BaseCode.authFeiled.getCodeExplain()).setSuccess(false);
     }
 
     /**
@@ -106,7 +106,7 @@ public class PageResultBean<T> extends ResultBean<T> {
      * @return 当前对象
      */
     public static PageResultBean notPermited() {
-        return new PageResultBean().setCode(BaseCode.notPermited).setSuccess(false);
+        return new PageResultBean().setCode(BaseCode.notPermited).setMessage(BaseCode.notPermited.getCodeExplain()).setSuccess(false);
     }
 
 

@@ -1,5 +1,7 @@
 package net.unsun.infrastructure.security.config;
 
+import net.unsun.infrastructure.security.ex.handler.UserAccessDeniedHandler;
+import net.unsun.infrastructure.security.ex.handler.UserAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -16,6 +18,7 @@ import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConv
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
+import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
  * @program: unsun-framework
@@ -31,6 +34,16 @@ public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigu
     CustomSecurityProperties customSecurityProperties;
 
     @Bean
+    AuthenticationEntryPoint authenticationEntryPoint(){
+        return new UserAuthenticationEntryPoint();
+    }
+
+    @Bean
+    UserAccessDeniedHandler userAccessDeniedHandler(){
+        return new UserAccessDeniedHandler();
+    }
+
+    @Bean
     @ConditionalOnMissingBean(PasswordEncoder.class)
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -38,6 +51,7 @@ public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigu
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        resources.authenticationEntryPoint(authenticationEntryPoint()).accessDeniedHandler(userAccessDeniedHandler());
         DefaultAccessTokenConverter accessTokenConverter = new DefaultAccessTokenConverter();
         UserAuthenticationConverter userTokenConverter = new CustomUserAuthenticationConverter();
         accessTokenConverter.setUserTokenConverter(userTokenConverter);

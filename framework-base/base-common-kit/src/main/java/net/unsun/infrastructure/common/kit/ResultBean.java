@@ -58,7 +58,7 @@ public class ResultBean<T> implements Serializable {
      * @return 当前对象
      */
     public static ResultBean success() {
-        return new ResultBean(BaseCode.success);
+        return new ResultBean(BaseCode.success).setMessage(BaseCode.success.getCodeExplain());
     }
 
     /**
@@ -67,7 +67,7 @@ public class ResultBean<T> implements Serializable {
      * @return 当前对象
      */
     public static ResultBean fail() {
-        return new ResultBean(BaseCode.fail).setSuccess(false);
+        return new ResultBean(BaseCode.fail).setMessage(BaseCode.fail.getCodeExplain()).setSuccess(false);
     }
 
 
@@ -77,7 +77,7 @@ public class ResultBean<T> implements Serializable {
      * @return 当前对象
      */
     public static ResultBean blank() {
-        return new ResultBean(BaseCode.notFound).setSuccess(false);
+        return new ResultBean(BaseCode.blank).setMessage(BaseCode.blank.getCodeExplain()).setSuccess(false);
     }
 
     /**
@@ -86,7 +86,7 @@ public class ResultBean<T> implements Serializable {
      * @return 当前对象
      */
     public static ResultBean systemBusy() {
-        return new ResultBean(BaseCode.systemBusy).setSuccess(false);
+        return new ResultBean(BaseCode.systemBusy).setMessage(BaseCode.systemBusy.getCodeExplain()).setSuccess(false);
     }
 
 
@@ -96,7 +96,7 @@ public class ResultBean<T> implements Serializable {
      * @return 当前对象
      */
     public static ResultBean exception() {
-        return new ResultBean(BaseCode.exception).setSuccess(false);
+        return new ResultBean(BaseCode.exception).setMessage(BaseCode.exception.getCodeExplain()).setSuccess(false);
     }
 
     /**
@@ -105,7 +105,7 @@ public class ResultBean<T> implements Serializable {
      * @return 当前对象
      */
     public static ResultBean notlogin() {
-        return new ResultBean(BaseCode.notLogin).setSuccess(false);
+        return new ResultBean(BaseCode.notLogin).setMessage(BaseCode.notLogin.getCodeExplain()).setSuccess(false);
     }
 
     /**
@@ -114,7 +114,7 @@ public class ResultBean<T> implements Serializable {
      * @return 当前对象
      */
     public static ResultBean authFeiled() {
-        return new ResultBean(BaseCode.authFeiled).setSuccess(false);
+        return new ResultBean(BaseCode.authFeiled).setMessage(BaseCode.authFeiled.getCodeExplain()).setSuccess(false);
     }
 
     /**
@@ -123,7 +123,7 @@ public class ResultBean<T> implements Serializable {
      * @return 当前对象
      */
     public static ResultBean notPermited() {
-        return new ResultBean(BaseCode.notPermited).setSuccess(false);
+        return new ResultBean(BaseCode.notPermited).setMessage(BaseCode.notPermited.getCodeExplain()).setSuccess(false);
     }
 
 
