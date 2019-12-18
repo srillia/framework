@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -75,11 +76,11 @@ public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigu
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+        //跨域
         http
                 .cors()
                 .and()
                 .csrf().disable();
-
         if(customSecurityProperties.getPathPassPattern() != null) {
             List<String> pathPassPatterns = customSecurityProperties.getPathPassPattern();
             List<String> patterns = new ArrayList<>();
@@ -100,7 +101,10 @@ public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigu
                     .antMatchers(pathAndAddress[0]).hasIpAddress(pathAndAddress[1]);
         }
 
-        http.authorizeRequests()
+        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS)
+                .permitAll()
+                .requestMatchers(CorsUtils::isPreFlightRequest)
+                .permitAll()
                 .anyRequest().authenticated();
     }
 
