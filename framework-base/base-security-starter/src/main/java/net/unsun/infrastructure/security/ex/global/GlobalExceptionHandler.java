@@ -24,6 +24,7 @@ public class GlobalExceptionHandler {
         if(ex instanceof AccessDeniedException) {
             return ResultBean.notPermited().setData(ex.getMessage());
         }
+        ex.printStackTrace();
         log.info("GlobalExceptionHandler捕获到异常信息");
         log.error("异常信息:" + ex);
         return ResultBean.systemBusy().setData(ex.getMessage());
