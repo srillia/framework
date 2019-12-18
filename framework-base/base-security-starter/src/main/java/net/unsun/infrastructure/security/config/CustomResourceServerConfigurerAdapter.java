@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.web.cors.CorsUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +35,7 @@ import java.util.List;
 @Order(2)
 @Configuration
 @EnableResourceServer
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
 
     @Autowired
@@ -72,7 +75,10 @@ public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigu
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http
+                .cors()
+                .and()
+                .csrf().disable();
 
         if(customSecurityProperties.getPathPassPattern() != null) {
             List<String> pathPassPatterns = customSecurityProperties.getPathPassPattern();
@@ -96,7 +102,6 @@ public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigu
 
         http.authorizeRequests()
                 .anyRequest().authenticated();
-
     }
 
 }

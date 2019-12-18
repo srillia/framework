@@ -2,6 +2,7 @@ package net.unsun.infrastructure.security.autoconfigure;
 
 import net.unsun.infrastructure.security.config.CustomResourceServerConfigurerAdapter;
 import net.unsun.infrastructure.security.config.CustomSecurityProperties;
+import net.unsun.infrastructure.security.config.GlobalCorsConfig;
 import net.unsun.infrastructure.security.config.TokenFeignClientInterceptor;
 import net.unsun.infrastructure.security.ex.global.GlobalExceptionHandler;
 import net.unsun.infrastructure.security.mybatis.plus.config.CustomMetaObjectHandler;
@@ -16,7 +17,10 @@ import org.springframework.context.annotation.Import;
  * @create: 2019-11-28 16:24
  */
 @Configuration
-@Import({CustomResourceServerConfigurerAdapter.class, TokenFeignClientInterceptor.class, GlobalExceptionHandler.class})
+@Import({CustomResourceServerConfigurerAdapter.class,
+        TokenFeignClientInterceptor.class,
+        GlobalExceptionHandler.class,
+        GlobalCorsConfig.class})
 @EnableConfigurationProperties(CustomSecurityProperties.class)
 public class CustomSecurityAutoConfiguration {
 
