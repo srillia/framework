@@ -2,6 +2,8 @@ package net.unsun.infrastructure.security.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.List;
+
 /**
  * @program: unsun-framework
  * @author: Tokey
@@ -33,7 +35,7 @@ public class CustomSecurityProperties {
     /**
      * 开放路径
      */
-    String pathPassPattern;
+    List<String> pathPassPattern;
 
     /**
      * 开放给具体的ip
@@ -72,11 +74,11 @@ public class CustomSecurityProperties {
         this.resourceId = resourceId;
     }
 
-    public String getPathPassPattern() {
+    public List<String> getPathPassPattern() {
         return pathPassPattern;
     }
 
-    public void setPathPassPattern(String pathPassPattern) {
+    public void setPathPassPattern(List<String> pathPassPattern) {
         this.pathPassPattern = pathPassPattern;
     }
 

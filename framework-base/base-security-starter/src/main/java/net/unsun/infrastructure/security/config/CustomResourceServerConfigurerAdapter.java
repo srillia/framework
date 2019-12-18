@@ -20,6 +20,11 @@ import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @program: unsun-framework
  * @author: Tokey
@@ -70,9 +75,17 @@ public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigu
         http.csrf().disable();
 
         if(customSecurityProperties.getPathPassPattern() != null) {
-            String[] passPatterns = customSecurityProperties.getPathPassPattern().split(",");
-            http.authorizeRequests()
-                    .antMatchers(passPatterns).permitAll();
+            List<String> pathPassPatterns = customSecurityProperties.getPathPassPattern();
+            List<String> patterns = new ArrayList<>();
+            if(pathPassPatterns != null && pathPassPatterns.size() >0) {
+                for (String passPattern : pathPassPatterns) {
+                    patterns.addAll(Arrays.asList(passPattern.split(",")));
+                }
+                String[] pathes = patterns.toArray(new String[patterns.size()]);
+                http.authorizeRequests()
+                        .antMatchers(pathes).permitAll();
+            }
+
         }
 
         if(customSecurityProperties.getOpenToAddress() != null) {

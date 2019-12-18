@@ -34,6 +34,15 @@ public class SecurityKit extends SecurityContextHolder {
      *
      * @return 用户账号
      */
+    public static boolean isNotLogin() {
+        return !isLogin();
+    }
+
+    /**
+     * 获取当前系统登陆用户账号
+     *
+     * @return 用户账号
+     */
     public static boolean isLogin() {
         if (!isAuthenticated()) {
             return false;

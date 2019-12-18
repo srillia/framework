@@ -14,12 +14,12 @@ import java.io.Serializable;
 public class ResultBean<T> implements Serializable {
 
     /**
-     * 状态码：-1 参数校验错误；1 成功；2 失败 3 系统繁忙 4 空数据; 5异常 6未登录 7 认证失败
+     * 状态码：-1 参数校验错误；1 成功；2 失败 3 系统繁忙 4 空数据; 5异常 6未登录 7 认证失败 8没有权限
      */
     private int code = BaseCode.success.getCode();
 
     /**
-     * 状态码：-1 参数校验错误；1 成功；2 失败 3 系统繁忙 4 空数据; 5异常 6未登录 7 认证失败
+     * 状态码：-1 参数校验错误；1 成功；2 失败 3 系统繁忙 4 空数据; 5异常 6未登录 7 认证失败 8没有权限
      */
     private String codeExplain = BaseCode.success.getCodeExplain();
     /**
