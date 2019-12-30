@@ -27,7 +27,7 @@ public class UserAccessDeniedHandler implements AccessDeniedHandler {
     }
 
     private void encapsulateResult(HttpServletResponse response, AccessDeniedException ade) throws IOException {
-        response.setContentType("application/json,charset=utf-8");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(200);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(response.getOutputStream(), ResultBean.notPermited().setData(ade.getMessage()));

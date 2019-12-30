@@ -32,7 +32,7 @@ public class UserAuthenticationEntryPoint extends OAuth2AuthenticationEntryPoint
     }
 
     private void encapsulateResult(HttpServletResponse response, AuthenticationException e) throws IOException {
-        response.setContentType("application/json,charset=utf-8");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(200);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(response.getOutputStream(), ResultBean.authFeiled().setData(e.getMessage()));

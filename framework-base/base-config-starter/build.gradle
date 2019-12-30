@@ -3,4 +3,5 @@ dependencies {
     compile project(":framework-base:base-logging-log4j2")
     compile 'org.springframework.boot:spring-boot-starter'
     compile "org.springframework.boot:spring-boot-starter-web"
+
 }
