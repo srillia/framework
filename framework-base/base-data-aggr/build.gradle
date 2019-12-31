@@ -1,0 +1,6 @@
+dependencies {
+    compile project(":framework-base:base-common-kit")
+    compile "commons-beanutils:commons-beanutils:${beanUtilsVersion}"
+    compile "cglib:cglib-nodep:${cglibNodepVersion}"
+    compile "com.google.collections:google-collections:${googleCollectionsVersion}"
+}
