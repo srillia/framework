@@ -11,6 +11,6 @@ public interface AggrBuilder<T> {
      * build
      * @return
      */
-    T build();
+    T build() throws Exception;
 
 }

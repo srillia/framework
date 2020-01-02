@@ -4,14 +4,20 @@ package net.unsun.infrastructure.aggr.util;
 import com.google.common.collect.Maps;
 import net.sf.cglib.beans.BeanGenerator;
 import net.sf.cglib.beans.BeanMap;
+import net.unsun.infrastructure.common.kit.PageResultBean;
+import net.unsun.infrastructure.common.kit.ResultBean;
 import org.apache.commons.beanutils.PropertyUtilsBean;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -20,7 +26,7 @@ import java.util.stream.Collectors;
  * @author loken
  * @since 2019-12-30
  */
-public class DataAggrUtil {
+public class AggrUtil {
 
 
     public static <T> List<T> copy(List<T> masterDataList, String masterIdFiledName, Collection<?> slaveDataList, String slaveIdFiledName, String slaveFiledName) {
@@ -44,6 +50,45 @@ public class DataAggrUtil {
             T result2 = (T) dynamicAddCloumn(masterData, slaveData, slaveFiledName);
             return result2;
         }).orElse(null)).filter(Objects::nonNull).collect(Collectors.toList());
+        return result;
+    }
+
+    /**
+     * 获取id集合
+     *
+     * @param coll
+     * @return
+     */
+    public static List<Long> ids(Object coll) {
+        List<Long> result = new ArrayList<>();
+        Collection<?> rowList = null;
+        try {
+            if(coll instanceof PageResultBean) {
+                PageResultBean<?> pageResultBean = (PageResultBean)coll;
+                rowList = pageResultBean.getList();
+            } else if(coll instanceof ResultBean) {
+                ResultBean<?> resultBean = (ResultBean)coll;
+                Object mainData = resultBean.getData();
+                if(mainData instanceof Collection) {
+                    rowList = (Collection<?>) mainData;
+                }
+            }
+
+            if(rowList != null) {
+                for (Object item : rowList) {
+                    Class<?> _class = item.getClass();
+                    if (item instanceof Map) {
+                        Map map = (Map) item;
+                        result.add(Long.parseLong(map.get("id").toString()));
+                    } else {
+                        Method getIdMethod = _class.getMethod("getId");
+                        result.add(Long.parseLong(getIdMethod.invoke(item).toString()));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return result;
     }
 
