@@ -28,15 +28,20 @@ import java.util.stream.Collectors;
  */
 public class AggrUtil {
 
-
-    public static <T> List<T> copy(List<T> masterDataList, String masterIdFiledName, Collection<?> slaveDataList, String slaveIdFiledName, String slaveFiledName) {
+    public static <T> List<T> copy(List<T> masterDataList, List<String> masterIdFiledNames, Collection<?> slaveDataList, List<String> slaveIdFiledNames, String slaveFiledName) {
         List<T> result = masterDataList.stream().map(masterData -> slaveDataList.stream().filter(slaveData -> {
             Class masterClassType = masterData.getClass();
             Class slaveClassType = slaveData.getClass();
             try {
-                String masterValue = invokeMethodAndReturn(masterClassType, masterData, masterIdFiledName);
-                String slaveValue = invokeMethodAndReturn(slaveClassType, slaveData, slaveIdFiledName);
-                return Objects.equals(masterValue, slaveValue);
+                for (int i = 0; i < masterIdFiledNames.size(); i++) {
+                    String masterValue = invokeMethodAndReturn(masterClassType, masterData, masterIdFiledNames.get(i));
+                    String slaveValue = invokeMethodAndReturn(slaveClassType, slaveData, slaveIdFiledNames.get(i));
+                    if (Objects.equals(masterValue, slaveValue)) {
+                        continue;
+                    }
+                    return false;
+                }
+                return true;
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
@@ -72,8 +77,11 @@ public class AggrUtil {
                 if(mainData instanceof Collection) {
                     rowList = (Collection<?>) mainData;
                 }
+            } else {
+                if(coll instanceof  Collection) {
+                    rowList = (Collection<?>) coll;
+                }
             }
-
             if(rowList != null) {
                 for (Object item : rowList) {
                     Class<?> _class = item.getClass();
@@ -91,6 +99,50 @@ public class AggrUtil {
         }
         return result;
     }
+
+
+    /**
+     * 获取id集合
+     *
+     * @param coll
+     * @return
+     */
+    public static <T> List<T> ids(Object coll, String fieldName) {
+        List<T> result = new ArrayList<>();
+        Collection<?> rowList = null;
+        try {
+            if (coll instanceof PageResultBean) {
+                PageResultBean<?> pageResultBean = (PageResultBean) coll;
+                rowList = pageResultBean.getList();
+            } else if (coll instanceof ResultBean) {
+                ResultBean<?> resultBean = (ResultBean) coll;
+                Object mainData = resultBean.getData();
+                if (mainData instanceof Collection) {
+                    rowList = (Collection<?>) mainData;
+                }
+            } else {
+                if (coll instanceof Collection) {
+                    rowList = (Collection<?>) coll;
+                }
+            }
+            if (rowList != null) {
+                for (Object item : rowList) {
+                    Class<?> _class = item.getClass();
+                    if (item instanceof Map) {
+                        Map map = (Map) item;
+                        result.add((T) map.get(fieldName));
+                    } else {
+                        Method getIdMethod = _class.getMethod("get" + upperHeadChar(fieldName));
+                        result.add((T) getIdMethod.invoke(item));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 
     /**
      * 执行方法并返回值

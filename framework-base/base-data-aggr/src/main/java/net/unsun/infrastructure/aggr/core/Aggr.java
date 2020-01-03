@@ -4,6 +4,7 @@ import net.unsun.infrastructure.aggr.util.AggrUtil;
 import net.unsun.infrastructure.common.kit.PageResultBean;
 import net.unsun.infrastructure.common.kit.ResultBean;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -70,11 +71,13 @@ public abstract class Aggr<T> implements  AggrBuilder<T> {
             } else {
                 stack.get().put(MAIN, main);
             }
-            stack.get().put(MAIN_ID_FIELD_NAME, isBlank(mainIdName) ? mainIdFiledName : mainIdName);
+            stack.get().put(MAIN_ID_FIELD_NAME, isBlank(mainIdName) ? (new ArrayList<>() {{
+                add(mainIdFiledName);
+            }}) : mainIdName);
+            stack.get().put("operator",Operator.born().setMainMap(stack.get()));
             if(stack.get().get(MAIN) instanceof Collection) {
                 return new AggrCollectionData<T>();
             }
-            stack.get().put("operator",Operator.born().setMainMap(stack.get()));
             return new AggrStandardData<T>();
         } catch (RuntimeException e) {
             e.printStackTrace();
@@ -83,9 +86,32 @@ public abstract class Aggr<T> implements  AggrBuilder<T> {
         }
     }
 
+    public Aggr<T> mixId(String id) {
+        try {
+            Operator operator = (Operator) stack.get().get("operator");
+            if (operator != null) {
+                if (operator.getType() == 1) {
+                    if (operator.getMainMap() != null) {
+                        ((ArrayList) operator.getMainMap().get(MAIN_ID_FIELD_NAME)).add(id);
+                    }
+                    return this;
+                } else if (operator.getType() == 2) {
+                    if (operator.getCertainSlaveMap() != null) {
+                        ((ArrayList) operator.getCertainSlaveMap().get(SLAVE_ID_FIELD_NAME)).add(id);
+                    }
+                    return this;
+                }
+            }
+            return this;
+        } catch (Exception e) {
+            e.printStackTrace();
+            stack.remove();
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void checkAggrParams() {
-        Object main = stack.get().get(MAIN);
         if(stack.get() == null ||stack.get().get(MAIN) == null) {
             throw new RuntimeException("Aggr : main item cannot be null");
         }
@@ -150,7 +176,9 @@ public abstract class Aggr<T> implements  AggrBuilder<T> {
             }
 
             map.put(SLAVE_ITEM_NAME, isBlank(filedName)? AggrUtil.lowerHeadChar(map.get(SLAVE_ITEM).getClass().getSimpleName()):filedName);
-            map.put(SLAVE_ID_FIELD_NAME, isBlank(idFiledName) ? slaveIdFileName : idFiledName);
+            map.put(SLAVE_ID_FIELD_NAME, isBlank(idFiledName) ? (new ArrayList<>() {{
+                add(slaveIdFileName);
+            }}) : idFiledName);
             ((Set) stack.get().get(SLAVE)).add(map);
             stack.get().put("operator",Operator.born().setCertainSlaveMap(map));
         } catch (RuntimeException e) {
