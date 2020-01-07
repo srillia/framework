@@ -1,4 +1,4 @@
-package net.unsun.infrastructure.security.mybatis.plus.config;
+package net.unsun.infrastructure.security.ibatis;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;

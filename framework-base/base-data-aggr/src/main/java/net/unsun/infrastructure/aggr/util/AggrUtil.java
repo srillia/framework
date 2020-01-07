@@ -29,32 +29,30 @@ import java.util.stream.Collectors;
 public class AggrUtil {
 
     public static <T> List<T> copy(List<T> masterDataList, List<String> masterIdFiledNames, Collection<?> slaveDataList, List<String> slaveIdFiledNames, String slaveFiledName) {
-        List<T> result = masterDataList.stream().map(masterData -> slaveDataList.stream().filter(slaveData -> {
-            Class masterClassType = masterData.getClass();
-            Class slaveClassType = slaveData.getClass();
-            try {
-                for (int i = 0; i < masterIdFiledNames.size(); i++) {
-                    String masterValue = invokeMethodAndReturn(masterClassType, masterData, masterIdFiledNames.get(i));
-                    String slaveValue = invokeMethodAndReturn(slaveClassType, slaveData, slaveIdFiledNames.get(i));
-                    if (Objects.equals(masterValue, slaveValue)) {
-                        continue;
-                    }
-                    return false;
-                }
-                return true;
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            return false;
+        List<T> result = masterDataList.stream()
+                .map(masterData ->
+                        slaveDataList.stream().filter(slaveData -> {
+                            Class masterClassType = masterData.getClass();
+                            Class slaveClassType = slaveData.getClass();
+                            try {
+                                for (int i = 0; i < masterIdFiledNames.size(); i++) {
+                                    String masterValue = invokeMethodAndReturn(masterClassType, masterData, masterIdFiledNames.get(i));
+                                    String slaveValue = invokeMethodAndReturn(slaveClassType, slaveData, slaveIdFiledNames.get(i));
+                                    if (Objects.equals(masterValue, slaveValue)) {
+                                        continue;
+                                    }
+                                    return false;
+                                }
+                                return true;
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            return false;
 
-        }).findFirst().map(slaveData -> {
-            T result2 = (T) dynamicAddCloumn(masterData, slaveData, slaveFiledName);
-            return result2;
-        }).orElse(null)).filter(Objects::nonNull).collect(Collectors.toList());
+                        }).findFirst().map(slaveData -> {
+                            T result2 = (T) dynamicAddCloumn(masterData, slaveData, slaveFiledName);
+                            return result2;
+                        }).orElse(masterData)).filter(Objects::nonNull).collect(Collectors.toList());
         return result;
     }
 
@@ -68,21 +66,21 @@ public class AggrUtil {
         List<Long> result = new ArrayList<>();
         Collection<?> rowList = null;
         try {
-            if(coll instanceof PageResultBean) {
-                PageResultBean<?> pageResultBean = (PageResultBean)coll;
+            if (coll instanceof PageResultBean) {
+                PageResultBean<?> pageResultBean = (PageResultBean) coll;
                 rowList = pageResultBean.getList();
-            } else if(coll instanceof ResultBean) {
-                ResultBean<?> resultBean = (ResultBean)coll;
+            } else if (coll instanceof ResultBean) {
+                ResultBean<?> resultBean = (ResultBean) coll;
                 Object mainData = resultBean.getData();
-                if(mainData instanceof Collection) {
+                if (mainData instanceof Collection) {
                     rowList = (Collection<?>) mainData;
                 }
             } else {
-                if(coll instanceof  Collection) {
+                if (coll instanceof Collection) {
                     rowList = (Collection<?>) coll;
                 }
             }
-            if(rowList != null) {
+            if (rowList != null) {
                 for (Object item : rowList) {
                     Class<?> _class = item.getClass();
                     if (item instanceof Map) {
@@ -193,7 +191,6 @@ public class AggrUtil {
 
     /**
      * 判断是否为空
-     *
      *
      * @param obj
      * @return

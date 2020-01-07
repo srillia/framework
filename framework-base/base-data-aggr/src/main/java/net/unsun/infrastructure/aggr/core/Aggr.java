@@ -195,12 +195,17 @@ public abstract class Aggr<T> implements  AggrBuilder<T> {
             if(operator != null) {
                 if(operator.getType() == 1) {
                     if(operator.getMainMap() != null) {
-                        operator.getMainMap().put(MAIN_ID_FIELD_NAME,id);
+                        operator.getMainMap().put(MAIN_ID_FIELD_NAME ,new ArrayList<>() {{
+                            add(id);
+                        }});
+
                     }
                     return this;
                 } else if (operator.getType() == 2){
                     if(operator.getCertainSlaveMap() != null) {
-                        operator.getCertainSlaveMap().put(SLAVE_ID_FIELD_NAME,id);
+                        operator.getCertainSlaveMap().put(SLAVE_ID_FIELD_NAME,new ArrayList<>() {{
+                            add(id);
+                        }});
                     }
                     return this;
                 }
