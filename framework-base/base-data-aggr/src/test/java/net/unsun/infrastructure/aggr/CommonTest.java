@@ -102,4 +102,11 @@ public class CommonTest {
         System.out.println(JSON.toJSONString(list3));
 
     }
+    @Test
+    public void test03() {
+        String str = "ssssssssssss; " +
+                "";
+        String[] split = str.split(";");
+        System.out.println(split.length);
+    }
 }
