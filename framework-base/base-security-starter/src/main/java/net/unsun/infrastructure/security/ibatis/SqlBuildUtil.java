@@ -111,9 +111,13 @@ public class SqlBuildUtil {
                 if (sqlField.endsWith("datetime")) {
                     addColumnSql.append(",'").append(LocalDateTime.now()).append("'");
                 } else if (sqlField.endsWith("id")) {
-                    addColumnSql.append(",'").append(SecurityKit.currentUser().getUserId()).append("'");
+                    if(SecurityKit.isLogin()) {
+                        addColumnSql.append(",'").append(SecurityKit.currentUser().getUserId()).append("'");
+                    }
                 } else if (sqlField.endsWith("name")) {
-                    addColumnSql.append(",'").append(SecurityKit.currentUser().getUsername()).append("'");
+                    if(SecurityKit.isLogin()) {
+                        addColumnSql.append(",'").append(SecurityKit.currentUser().getUsername()).append("'");
+                    }
                 }
             }
         }
@@ -132,7 +136,14 @@ public class SqlBuildUtil {
         for (int i = 0; i < INSERT_ADD_COLUMN.length; i++) {
             String sqlField = INSERT_ADD_COLUMN[i];
             if (!originalSql.contains(sqlField)) {
-                addColumnSql.append(",").append(sqlField);
+                if(SecurityKit.isLogin()) {
+                    addColumnSql.append(",").append(sqlField);
+                } else {
+                    if(sqlField.contains("datetime")) {
+                        addColumnSql.append(",").append(sqlField);
+                    }
+                }
+
             }
         }
         return addColumnSql.toString();
@@ -179,12 +190,16 @@ public class SqlBuildUtil {
                     break;
                 case "update_by_id":
                     if (!originalSql.contains(sqlField)) {
-                        addColumnSql.append(sqlField).append(" = '").append(SecurityKit.currentUser().getUserId()).append("',");
-                    }
+                        if(SecurityKit.isLogin()) {
+                            addColumnSql.append(sqlField).append(" = '").append(SecurityKit.currentUser().getUserId()).append("',");
+                        }
+                     }
                     break;
                 case "update_by_name":
                     if (!originalSql.contains(sqlField)) {
-                        addColumnSql.append(sqlField).append(" = '").append(SecurityKit.currentUser().getUsername()).append("',");
+                        if(SecurityKit.isLogin()) {
+                            addColumnSql.append(sqlField).append(" = '").append(SecurityKit.currentUser().getUsername()).append("',");
+                        }
                     }
                     break;
                 default:

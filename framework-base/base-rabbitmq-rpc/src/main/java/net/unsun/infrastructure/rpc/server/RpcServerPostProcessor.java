@@ -54,7 +54,7 @@ public class RpcServerPostProcessor implements BeanPostProcessor {
                 }
             }
         } else {
-            if(rpcServerClass.getName().contains("CGLIB")) {//cglib代理时，取其父类的注解
+            if (rpcServerClass.getName().contains("CGLIB")) {//cglib代理时，取其父类的注解
                 Annotation[] annotations = rpcServerClass.getSuperclass().getAnnotations();
                 for (Annotation annotation : annotations) {
                     if (annotation instanceof RpcServer) {
