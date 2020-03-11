@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +23,7 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.web.cors.CorsUtils;
 
 import java.util.ArrayList;
@@ -36,6 +39,8 @@ import java.util.List;
 @Order(2)
 @Configuration
 @EnableResourceServer
+//需要重写时排除
+@ConditionalOnMissingBean(ResourceServerConfigurerAdapter.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
 
@@ -57,6 +62,10 @@ public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigu
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
+    @Autowired(required = false)
+    AccessDecisionManager accessDecisionManager;
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -106,6 +115,17 @@ public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigu
                 .requestMatchers(CorsUtils::isPreFlightRequest)
                 .permitAll()
                 .anyRequest().authenticated();
+
+        //如果业务项目有 accessDecisionManager，则注入
+        if(accessDecisionManager != null) {
+            http.authorizeRequests().withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {       // 重写做权限判断
+                @Override
+                public <O extends FilterSecurityInterceptor> O postProcess(O o) {
+                    o.setAccessDecisionManager(accessDecisionManager);      // 权限判断
+                    return o;
+                }
+            });
+        }
     }
 
 }
