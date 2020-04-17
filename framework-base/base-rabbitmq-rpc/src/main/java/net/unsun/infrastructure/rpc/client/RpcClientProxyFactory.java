@@ -127,10 +127,6 @@ public class RpcClientProxyFactory implements FactoryBean, BeanFactoryAware {
         syncSender.setReplyAddress(replyQueue.getName());
         syncSender.setReplyTimeout(replyTimeout);
         syncSender.setRetryTemplate(retryTemplate);
-        CustomRabbitmqConfirmCallback customRabbitmqConfirmCallback = new CustomRabbitmqConfirmCallback();
-        syncSender.setConfirmCallback(customRabbitmqConfirmCallback);
-        CustomRabbitmqReturnCallback customRabbitmqReturnCallback = new CustomRabbitmqReturnCallback();
-        syncSender.setReturnCallback(customRabbitmqReturnCallback);
         return syncSender;
     }
 

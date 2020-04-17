@@ -11,6 +11,7 @@ import net.unsun.infrastructure.rpc.util.ParamsConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -22,6 +23,7 @@ import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * RpcClientProxy
@@ -92,9 +94,9 @@ public class RpcClientProxy implements InvocationHandler {
         String paramDataJsonString = paramData.toJSONString();
         try {
             if (methodRpcType == RpcType.ASYNC) {
-//                fix(base-rabbitmq-rpc): 解决异步发送时的消息无法序列化问题 correlationData = new CorrelationData();
-//                correlationData.setId(paramDataJsonString);
-                asyncSender.convertAndSend(paramDataJsonString);
+                CorrelationData correlationData = new CorrelationData();
+                correlationData.setId(paramDataJsonString);
+                asyncSender.correlationConvertAndSend(paramDataJsonString,correlationData);
                 LOGGER.debug(methodRpcType.getName() + "-RpcClient-" + this.rpcName + ", Method: " + methodName + " Call Success, Param: " + paramDataJsonString);
                 return null;
             }
