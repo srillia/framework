@@ -2,6 +2,7 @@ package net.unsun.infrastructure.security.autoconfigure;
 
 import net.unsun.infrastructure.security.config.CustomResourceServerConfigurerAdapter;
 import net.unsun.infrastructure.security.config.CustomSecurityProperties;
+import net.unsun.infrastructure.security.config.CustomWebSecurityConfigurerAdapter;
 import net.unsun.infrastructure.security.config.GlobalCorsConfig;
 import net.unsun.infrastructure.security.config.TokenFeignClientInterceptor;
 import net.unsun.infrastructure.security.ex.global.GlobalExceptionHandler;
@@ -21,7 +22,8 @@ import org.springframework.context.annotation.Import;
 @Import({CustomResourceServerConfigurerAdapter.class,
         TokenFeignClientInterceptor.class,
         GlobalExceptionHandler.class,
-        GlobalCorsConfig.class})
+        GlobalCorsConfig.class,
+        CustomWebSecurityConfigurerAdapter.class})
 @EnableConfigurationProperties(CustomSecurityProperties.class)
 public class CustomSecurityAutoConfiguration {
 
