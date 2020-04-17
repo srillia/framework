@@ -92,9 +92,9 @@ public class RpcClientProxy implements InvocationHandler {
         String paramDataJsonString = paramData.toJSONString();
         try {
             if (methodRpcType == RpcType.ASYNC) {
-                CorrelationData correlationData = new CorrelationData();
-                correlationData.setId(paramDataJsonString);
-                asyncSender.convertAndSend(paramDataJsonString, correlationData);
+//                fix(base-rabbitmq-rpc): 解决异步发送时的消息无法序列化问题 correlationData = new CorrelationData();
+//                correlationData.setId(paramDataJsonString);
+                asyncSender.convertAndSend(paramDataJsonString);
                 LOGGER.debug(methodRpcType.getName() + "-RpcClient-" + this.rpcName + ", Method: " + methodName + " Call Success, Param: " + paramDataJsonString);
                 return null;
             }
