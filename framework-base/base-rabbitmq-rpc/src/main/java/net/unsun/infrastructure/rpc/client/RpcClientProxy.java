@@ -10,6 +10,8 @@ import net.unsun.infrastructure.rpc.entity.RpcType;
 import net.unsun.infrastructure.rpc.util.ParamsConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.util.StringUtils;
@@ -90,7 +92,9 @@ public class RpcClientProxy implements InvocationHandler {
         String paramDataJsonString = paramData.toJSONString();
         try {
             if (methodRpcType == RpcType.ASYNC) {
-                asyncSender.convertAndSend(paramDataJsonString);
+                CorrelationData correlationData = new CorrelationData();
+                correlationData.setId(paramDataJsonString);
+                asyncSender.convertAndSend(paramDataJsonString, correlationData);
                 LOGGER.debug(methodRpcType.getName() + "-RpcClient-" + this.rpcName + ", Method: " + methodName + " Call Success, Param: " + paramDataJsonString);
                 return null;
             }

@@ -1,6 +1,8 @@
 package net.unsun.infrastructure.rpc.client;
 
 import net.unsun.infrastructure.rpc.annotation.RpcClient;
+import net.unsun.infrastructure.rpc.config.CustomRabbitmqReturnCallback;
+import net.unsun.infrastructure.rpc.config.CustomRabbitmqConfirmCallback;
 import net.unsun.infrastructure.rpc.entity.RpcType;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.DirectExchange;
@@ -104,6 +106,10 @@ public class RpcClientProxyFactory implements FactoryBean, BeanFactoryAware {
         RabbitTemplate asyncSender = registerBean(RpcType.ASYNC.getName() + "-Sender-" + rpcName, RabbitTemplate.class, connectionFactory);
         asyncSender.setDefaultReceiveQueue(rpcName + ".async");
         asyncSender.setRoutingKey(rpcName + ".async");
+        CustomRabbitmqConfirmCallback customRabbitmqConfirmCallback = new CustomRabbitmqConfirmCallback();
+        asyncSender.setConfirmCallback(customRabbitmqConfirmCallback);
+        CustomRabbitmqReturnCallback customRabbitmqReturnCallback = new CustomRabbitmqReturnCallback();
+        asyncSender.setReturnCallback(customRabbitmqReturnCallback);
         return asyncSender;
     }
 
@@ -121,6 +127,10 @@ public class RpcClientProxyFactory implements FactoryBean, BeanFactoryAware {
         syncSender.setReplyAddress(replyQueue.getName());
         syncSender.setReplyTimeout(replyTimeout);
         syncSender.setRetryTemplate(retryTemplate);
+        CustomRabbitmqConfirmCallback customRabbitmqConfirmCallback = new CustomRabbitmqConfirmCallback();
+        syncSender.setConfirmCallback(customRabbitmqConfirmCallback);
+        CustomRabbitmqReturnCallback customRabbitmqReturnCallback = new CustomRabbitmqReturnCallback();
+        syncSender.setReturnCallback(customRabbitmqReturnCallback);
         return syncSender;
     }
 
