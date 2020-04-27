@@ -1,0 +1,4 @@
+dependencies {
+    compile("io.seata:seata-spring-boot-starter:${seataVersion}")
+    compile ("com.alibaba.cloud:spring-cloud-alibaba-seata:${seataAlibabaVersion}")
+}
