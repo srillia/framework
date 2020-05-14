@@ -26,6 +26,16 @@ allprojects {
     //配置插件
     apply plugin: "idea"
     apply plugin: 'eclipse'
+
+    idea {
+        module {
+            // if you hate browsing Javadoc
+            downloadJavadoc = true
+
+            // and love reading sources
+            downloadSources = true
+        }
+    }
     // 配置多个maven源
     repositories {
         // 定义仓库位置
