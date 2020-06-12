@@ -15,6 +15,18 @@ public class UserDetail extends User {
      * 用户id
      */
     private Long userId;
+    /**
+     * 系统类型
+     */
+    private String systemType;
+    /**
+     * 用户昵称
+     */
+    private String userNickName;
+    /**
+     * 用户唯一ID
+     */
+    private Long uniqueId;
 
     public UserDetail(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
@@ -32,4 +44,27 @@ public class UserDetail extends User {
         this.userId = userId;
     }
 
+    public String getSystemType() {
+        return systemType;
+    }
+
+    public void setSystemType(String systemType) {
+        this.systemType = systemType;
+    }
+
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
+    }
+
+    public Long getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(Long uniqueId) {
+        this.uniqueId = uniqueId;
+    }
 }
