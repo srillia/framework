@@ -30,20 +30,21 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
     @Override
     public Authentication extractAuthentication(Map<String, ?> map) {
         if (map.containsKey(USERNAME)) {
-
             String username = (String) map.get(USERNAME);
             Object authorities = map.get("authorities");
             List<GrantedAuthority> grantedAuthorities = null;
-            if(authorities != null) {
-                List<String> roles = (List<String>)authorities;
+            if (authorities != null) {
+                List<String> roles = (List<String>) authorities;
                 grantedAuthorities = new ArrayList<>(roles.size());
-
                 for (String authority : roles) {
                     grantedAuthorities.add(new SimpleGrantedAuthority(authority));
                 }
             }
-            UserDetail user = new UserDetail(username,"", grantedAuthorities);
+            UserDetail user = new UserDetail(username, "", grantedAuthorities);
             user.setUserId(Long.parseLong(map.get("userId").toString()));
+            user.setSystemType(map.get("systemType").toString());
+            user.setUniqueId(Long.parseLong(map.get("uniqueId").toString()));
+            user.setUserNickName(null == map.get("userNickName") ? username : map.get("userNickName").toString());
             return new UsernamePasswordAuthenticationToken(user, N_A, grantedAuthorities);
         }
         return null;
