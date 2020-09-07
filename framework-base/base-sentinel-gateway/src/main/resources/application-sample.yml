@@ -1,0 +1,20 @@
+#该文件是配置参考文件
+spring:
+  application:
+    name: sample
+  cloud:
+    sentinel:
+      enabled: true
+      order:
+        pre: 10000
+        post: 1000
+        error: -1
+      transport:
+        port: 8719
+        dashboard: localhost:8089
+      datasource:
+        nacos:
+          server-addr: 192.168.10.225:8848
+          groupId: DEFAULT_GROUP
+      filter:
+        enabled: false

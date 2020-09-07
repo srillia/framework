@@ -1,0 +1,8 @@
+dependencies {
+
+    compile "com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel:${seataAlibabaVersion}"
+    compile "com.alibaba.cloud:spring-cloud-alibaba-sentinel-gateway:${seataAlibabaVersion}"
+    compile "com.alibaba.csp:sentinel-datasource-nacos:${sentinelVersion}"
+
+
+}
