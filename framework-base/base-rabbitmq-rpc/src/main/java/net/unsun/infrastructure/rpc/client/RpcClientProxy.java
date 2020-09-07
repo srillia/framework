@@ -1,8 +1,6 @@
 package net.unsun.infrastructure.rpc.client;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import net.unsun.infrastructure.common.constant.BaseCode;
 import net.unsun.infrastructure.common.kit.PageResultBean;
 import net.unsun.infrastructure.common.kit.ResultBean;
 import net.unsun.infrastructure.rpc.annotation.RpcClientMethod;
@@ -10,8 +8,6 @@ import net.unsun.infrastructure.rpc.entity.RpcType;
 import net.unsun.infrastructure.rpc.util.ParamsConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -20,10 +16,6 @@ import org.springframework.util.StringUtils;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * RpcClientProxy
@@ -118,7 +110,7 @@ public class RpcClientProxy implements InvocationHandler {
             LOGGER.error(e.getMessage(), e);
             e.printStackTrace();
         }
-        return null;
+        return ResultBean.fail();
     }
 
 }
