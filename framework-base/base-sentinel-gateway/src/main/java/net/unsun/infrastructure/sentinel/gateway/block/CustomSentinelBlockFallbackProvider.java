@@ -18,10 +18,7 @@ public class CustomSentinelBlockFallbackProvider implements ZuulBlockFallbackPro
 
     @Override
     public BlockResponse fallbackResponse(String route, Throwable cause) {
-        if (cause instanceof BlockException) {
-            return new CustomBlockResponse(429, "tokey do it", route);
-        } else {
-            return new BlockResponse(500, "System Error", route);
-        }
+
+        return new CustomBlockResponse(200, "sentinel block", route);
     }
 }
