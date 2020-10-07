@@ -1,6 +1,6 @@
 dependencies {
     compile project(":framework-base:base-logging-log4j2")
     //基础套件
-    compile "net.unsun.infrastructure:mybatis-plus-generator:1.0.2-SNAPSHOT"
+    compile "net.unsun.infrastructure:mybatis-plus-generator:1.0.3-SNAPSHOT"
     compile ("mysql:mysql-connector-java:6.0.6") //mysql驱动
 }
