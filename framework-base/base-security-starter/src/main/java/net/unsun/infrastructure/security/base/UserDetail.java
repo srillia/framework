@@ -24,6 +24,10 @@ public class UserDetail extends User {
      */
     private String userNickName;
     /**
+     * 用户头像
+     */
+    private String userAvatar;
+    /**
      * 用户唯一ID
      */
     private Long uniqueId;
@@ -66,5 +70,13 @@ public class UserDetail extends User {
 
     public void setUniqueId(Long uniqueId) {
         this.uniqueId = uniqueId;
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
     }
 }
