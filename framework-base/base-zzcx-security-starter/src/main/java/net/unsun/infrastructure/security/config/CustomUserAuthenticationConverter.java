@@ -42,16 +42,6 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
             }
             UserDetail user = new UserDetail(username, "", grantedAuthorities);
             user.setUserId(Long.parseLong(map.get("userId").toString()));
-            user.setSystemType(map.containsKey("systemType") ? map.get("systemType").toString() : "");
-            user.setUniqueId(map.containsKey("uniqueId") ? Long.parseLong(map.get("uniqueId").toString()) : 0L);
-            user.setUserNickName(map.containsKey("userNickName") ? (null == map.get("userNickName") ? username : map.get("userNickName").toString()) : "");
-            if (map.containsKey("userAvatar")) {
-                Object avatar = map.get("userAvatar");
-                if (null != avatar && !"".equals(avatar)) {
-                    user.setUserAvatar(avatar.toString());
-                }
-            }
-
             return new UsernamePasswordAuthenticationToken(user, N_A, grantedAuthorities);
         }
         return null;

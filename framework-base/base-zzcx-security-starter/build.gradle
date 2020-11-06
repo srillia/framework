@@ -1,0 +1,8 @@
+dependencies {
+    compile "org.springframework.cloud:spring-cloud-starter-oauth2"
+    compile project(":framework-base:base-common-kit")
+    compile project(":framework-base:base-cloud-feign")
+    compile project(":framework-base:base-boot-web")
+    //集成mybatis-plus
+    compile "com.baomidou:mybatis-plus:${mybatisplusVersion}"
+}
