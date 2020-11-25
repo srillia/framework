@@ -40,7 +40,7 @@ public class UserDetail extends User {
     /**
      * 学校ID
      */
-    private String schoolId;
+    private Long schoolId;
 
     public UserDetail(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
@@ -90,11 +90,11 @@ public class UserDetail extends User {
         this.userNo = userNo;
     }
 
-    public String getSchoolId() {
+    public Long getSchoolId() {
         return schoolId;
     }
 
-    public void setSchoolId(String schoolId) {
+    public void setSchoolId(Long schoolId) {
         this.schoolId = schoolId;
     }
 

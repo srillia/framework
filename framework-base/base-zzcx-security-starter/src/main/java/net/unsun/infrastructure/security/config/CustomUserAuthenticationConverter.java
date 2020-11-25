@@ -65,7 +65,7 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
             if (map.containsKey("schoolId")) {
                 Object avatar = map.get("schoolId");
                 if (null != avatar && !"".equals(avatar)) {
-                    user.setUserId(Long.parseLong(avatar.toString()));
+                    user.setSchoolId(Long.parseLong(avatar.toString()));
                 }
             }
             return new UsernamePasswordAuthenticationToken(user, N_A, grantedAuthorities);
