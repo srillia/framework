@@ -1,4 +1,4 @@
-<center><h1>框架说明文档</h1></center>
+<h1 align = "center">框架说明文档</h1>
 
 ## 目录结构:
 
@@ -22,7 +22,6 @@ L--framework                    		   		//主目录
 	    L--base-spring-test                  	//测试相关jar包
 	    L--base-swagger2                 		//swagger2相关jar，已废弃
 	    L--base-tx-seata                 		//alibaba seata相关
-	    L--base-zzcx-security-starter           //众智传学资源认证相关配置
     
 ```
 
@@ -54,7 +53,7 @@ compile "net.unsun.infrastructure:base-cloud-feign:${frameworkVersion}"
 
 ### 	base-cloud-zipkin
 
-​			已废弃项目
+​	
 
 ```groovy
 compile "net.unsun.infrastructure:base-cloud-zipkin:${frameworkVersion}"
@@ -128,7 +127,7 @@ compile "net.unsun.infrastructure:base-rabbitmq-rpc:${frameworkVersion}"
 
 ### 	base-security-starter
 
-​			此项目主要用于教师云和N次方商城的资源认证服务，不能用于众智传学的资源认证。
+​	
 
 ```java
 CustomSecurityAutoConfiguration.class    //此类用于引入所有的自定义配置和声明bean
@@ -166,7 +165,7 @@ compile "net.unsun.infrastructure:base-spring-test:${frameworkVersion}"
 
 ### 	base-swagger2
 
-​			已废弃项目，未有地方使用
+​		
 
 ```groovy
 compile "net.unsun.infrastructure:base-swagger2:${frameworkVersion}"
