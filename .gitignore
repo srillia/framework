@@ -9,6 +9,7 @@
 build/
 out/
 .gradle
+gradle/
 *.project
 .settings/
 *.classpath
