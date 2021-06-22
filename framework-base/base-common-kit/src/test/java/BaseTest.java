@@ -1,10 +1,8 @@
-import net.unsun.infrastructure.common.constant.BaseCode;
-import net.unsun.infrastructure.common.kit.LogInfoBean;
-import net.unsun.infrastructure.common.kit.PageResultBean;
-import net.unsun.infrastructure.common.kit.ResultBean;
+import io.gaad.infrastructure.common.constant.BaseCode;
+import io.gaad.infrastructure.common.kit.LogInfoBean;
+import io.gaad.infrastructure.common.kit.PageResultBean;
+import io.gaad.infrastructure.common.kit.ResultBean;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
 
 /**
  * @program: unsun-framework

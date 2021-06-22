@@ -1,0 +1,26 @@
+package io.gaad.infrastructure.rpc.annotation;
+
+import io.gaad.infrastructure.rpc.entity.RpcType;
+import org.springframework.stereotype.Component;
+
+import java.lang.annotation.*;
+
+/**
+ * RpcServer
+ *
+ * @author toby
+ */
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Component
+public @interface RpcServer {
+
+    String value();
+
+    int xMessageTTL() default 1000;
+
+    int threadNum() default 1;
+
+    RpcType[] type() default {RpcType.SYNC, RpcType.ASYNC};
+}

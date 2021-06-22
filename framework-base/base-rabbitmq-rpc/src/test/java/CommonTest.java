@@ -1,9 +1,7 @@
-import net.unsun.infrastructure.common.constant.BaseCode;
-import net.unsun.infrastructure.common.kit.PageResultBean;
-import net.unsun.infrastructure.common.kit.ResultBean;
-import net.unsun.infrastructure.rpc.entity.ErrorCode;
+import io.gaad.infrastructure.common.constant.BaseCode;
+import io.gaad.infrastructure.common.kit.ResultBean;
+import io.gaad.infrastructure.rpc.entity.ErrorCode;
 import org.junit.Test;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

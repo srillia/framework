@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-net.unsun.infrastructure.rpc.config.SimpleRpcAutoConfiguration
+io.gaad.infrastructure.rpc.config.SimpleRpcAutoConfiguration
