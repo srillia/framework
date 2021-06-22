@@ -32,7 +32,7 @@ L--framework                    		   		//主目录
 ​			此项目主要用于存放**spring-boot-start-web**相关jar，如果项目需要引入web相关jar，直接添加此项目即可。
 
 ```groovy
-compile "net.unsun.infrastructure:base-boot-web:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-boot-web:${frameworkVersion}"
 ```
 
 ### 	base-cloud-config:
@@ -40,7 +40,7 @@ compile "net.unsun.infrastructure:base-boot-web:${frameworkVersion}"
 ​			此项目主要用于引入**spring-cloud-config**相关jar，需要接入配置中心的项目，直接添加此项目即可。
 
 ```groovy
-compile "net.unsun.infrastructure:base-cloud-config:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-cloud-config:${frameworkVersion}"
 ```
 
 ### 	base-cloud-feign
@@ -48,7 +48,7 @@ compile "net.unsun.infrastructure:base-cloud-config:${frameworkVersion}"
 ​			此项目主要用于引入**spring-cloud-starter-openfeign**相关jar，需要接入feign的项目，直接添加此项目即可。
 
 ```groovy
-compile "net.unsun.infrastructure:base-cloud-feign:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-cloud-feign:${frameworkVersion}"
 ```
 
 ### 	base-cloud-zipkin
@@ -56,7 +56,7 @@ compile "net.unsun.infrastructure:base-cloud-feign:${frameworkVersion}"
 ​	
 
 ```groovy
-compile "net.unsun.infrastructure:base-cloud-zipkin:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-cloud-zipkin:${frameworkVersion}"
 ```
 
 ### 	base-common-kit
@@ -64,7 +64,7 @@ compile "net.unsun.infrastructure:base-cloud-zipkin:${frameworkVersion}"
 ​			项目中的工具类，整合了hutool工具包；**所有的子项目必须引入此项目**。
 
 ```groovy
-compile "net.unsun.infrastructure:base-common-kit:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-common-kit:${frameworkVersion}"
 ```
 
 ### 	base-config-starter
@@ -74,7 +74,7 @@ compile "net.unsun.infrastructure:base-common-kit:${frameworkVersion}"
 ![image-20210313170634075](C:\Users\loken\AppData\Roaming\Typora\typora-user-images\image-20210313170634075.png)
 
 ```groovy
-compile "net.unsun.infrastructure:base-config-starter:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-config-starter:${frameworkVersion}"
 ```
 
 ### 	base-data-aggr
@@ -82,7 +82,7 @@ compile "net.unsun.infrastructure:base-config-starter:${frameworkVersion}"
 ​			项目数据聚合框架，具体的使用请参考**《框架-Aggr(聚合)使用.pdf》**文件
 
 ```groovy
-compile "net.unsun.infrastructure:base-data-aggr:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-data-aggr:${frameworkVersion}"
 ```
 
 ### 	base-data-redis
@@ -90,7 +90,7 @@ compile "net.unsun.infrastructure:base-data-aggr:${frameworkVersion}"
 ​			此项目主要用于引入**spring-boot-starter-data-redis**相关jar，需要使用redis的项目，直接添加此项目即可。同时也对redistemplate的序列化进行了自定义处理（**net/unsun/infrastructure/reids/config/RedisConfig.java**）；
 
 ```groovy
-compile "net.unsun.infrastructure:base-data-redis:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-data-redis:${frameworkVersion}"
 ```
 
 ### 	base-logging-log4j2
@@ -98,7 +98,7 @@ compile "net.unsun.infrastructure:base-data-redis:${frameworkVersion}"
 ​			此项目主要用于引入**spring-boot-starter-log4j2**相关jar，**所有的子项目必须引入此项目**。同时也自定义了日志注解，具体的实现和注解请查看该项目代码
 
 ```groovy
-compile "net.unsun.infrastructure:base-logging-log4j2:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-logging-log4j2:${frameworkVersion}"
 ```
 
 ### 	base-mybatis-plus
@@ -106,7 +106,7 @@ compile "net.unsun.infrastructure:base-logging-log4j2:${frameworkVersion}"
 ​			此项目主要用于引入**mybatis-plus**相关jar，需要使用mybatis-plus的项目，直接添加此项目即可。同时也自定义了部分类用于继承mybatis-plus的抽象类和实现接口，子项目只需继承或者实现该jar中自定的类即可
 
 ```groovy
-compile "net.unsun.infrastructure:base-mybatis-plus:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-mybatis-plus:${frameworkVersion}"
 ```
 
 ### 	base-mybatis-plus-generator
@@ -114,7 +114,7 @@ compile "net.unsun.infrastructure:base-mybatis-plus:${frameworkVersion}"
 ​			此项目主要用于引入**mybatis-plus-generator**相关jar。需要注意的是，此项目中的mybaits-plus-generator的jar不是mybaits-plus官方提供的，而是基于官方提供的jar进行了模板渲染改造。
 
 ```groovy
-compile "net.unsun.infrastructure:base-mybatis-plus-generator:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-mybatis-plus-generator:${frameworkVersion}"
 ```
 
 ### 	base-rabbitmq-rpc
@@ -122,7 +122,7 @@ compile "net.unsun.infrastructure:base-mybatis-plus-generator:${frameworkVersion
 ​			此项目主要用于引入**spring-boot-starter-amqp**相关jar，通过自定义注解，基于rabbitmq的rpc模式实现了fgb框架。
 
 ```groovy
-compile "net.unsun.infrastructure:base-rabbitmq-rpc:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-rabbitmq-rpc:${frameworkVersion}"
 ```
 
 ### 	base-security-starter
@@ -144,7 +144,7 @@ SecurityKit.class      //获取用户信息的相关操作类
 ```
 
 ```groovy
-compile "net.unsun.infrastructure:base-security-starter:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-security-starter:${frameworkVersion}"
 ```
 
 ### 	base-sentinel-gateway
@@ -152,7 +152,7 @@ compile "net.unsun.infrastructure:base-security-starter:${frameworkVersion}"
 ​			此项目引入了阿里巴巴的**Sentinel**组件，关于Sentinel请查看官网信息；此项目基于1.7.1版本进行了部分改造，使其支持拦截持久化。
 
 ```groovy
-compile "net.unsun.infrastructure:base-sentinel-gateway:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-sentinel-gateway:${frameworkVersion}"
 ```
 
 ### 	base-spring-test
@@ -160,7 +160,7 @@ compile "net.unsun.infrastructure:base-sentinel-gateway:${frameworkVersion}"
 ​			此项目主要用于引入**spring-boot-starter-test**和**junit**相关单元测试需要的jar。
 
 ```groovy
-compile "net.unsun.infrastructure:base-spring-test:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-spring-test:${frameworkVersion}"
 ```
 
 ### 	base-swagger2
@@ -168,7 +168,7 @@ compile "net.unsun.infrastructure:base-spring-test:${frameworkVersion}"
 ​		
 
 ```groovy
-compile "net.unsun.infrastructure:base-swagger2:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-swagger2:${frameworkVersion}"
 ```
 
 ### 	base-tx-seata
@@ -176,5 +176,5 @@ compile "net.unsun.infrastructure:base-swagger2:${frameworkVersion}"
 ​			此项目引入阿里巴巴的分布式事务框架seata，关于seata的相关描述，请参考其官网。具体的使用方法，请查看**《框架-Seata的使用.pdf》**文件
 
 ```groovy
-compile "net.unsun.infrastructure:base-tx-seata:${frameworkVersion}"
+compile "io.gaad.infrastructure:base-tx-seata:${frameworkVersion}"
 ```
