@@ -201,7 +201,7 @@ subprojects {
                     //repository(url: mavenLocal().url)
                     //上传至maven私服
                     repository(url: "${nexusSnapshotUrl}") {
-                        authentication(userName: "admin", password: "123456")
+                        authentication(userName: "${nexusUsername}", password: "${nexusPassword}")
                     }
                     pom.version = "$project.version"
                     pom.artifactId = "$project.name"

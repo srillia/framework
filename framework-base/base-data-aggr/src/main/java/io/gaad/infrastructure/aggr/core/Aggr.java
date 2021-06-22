@@ -71,7 +71,7 @@ public abstract class Aggr<T> implements  AggrBuilder<T> {
             } else {
                 stack.get().put(MAIN, main);
             }
-            stack.get().put(MAIN_ID_FIELD_NAME, isBlank(mainIdName) ? (new ArrayList<>() {{
+            stack.get().put(MAIN_ID_FIELD_NAME, isBlank(mainIdName) ? (new ArrayList<String>() {{
                 add(mainIdFiledName);
             }}) : mainIdName);
             stack.get().put("operator",Operator.born().setMainMap(stack.get()));
@@ -176,7 +176,7 @@ public abstract class Aggr<T> implements  AggrBuilder<T> {
             }
 
             map.put(SLAVE_ITEM_NAME, isBlank(filedName)? AggrUtil.lowerHeadChar(map.get(SLAVE_ITEM).getClass().getSimpleName()):filedName);
-            map.put(SLAVE_ID_FIELD_NAME, isBlank(idFiledName) ? (new ArrayList<>() {{
+            map.put(SLAVE_ID_FIELD_NAME, isBlank(idFiledName) ? (new ArrayList<String>() {{
                 add(slaveIdFileName);
             }}) : idFiledName);
             ((Set) stack.get().get(SLAVE)).add(map);
@@ -195,7 +195,7 @@ public abstract class Aggr<T> implements  AggrBuilder<T> {
             if(operator != null) {
                 if(operator.getType() == 1) {
                     if(operator.getMainMap() != null) {
-                        operator.getMainMap().put(MAIN_ID_FIELD_NAME ,new ArrayList<>() {{
+                        operator.getMainMap().put(MAIN_ID_FIELD_NAME ,new ArrayList<String>() {{
                             add(id);
                         }});
 
@@ -203,7 +203,7 @@ public abstract class Aggr<T> implements  AggrBuilder<T> {
                     return this;
                 } else if (operator.getType() == 2){
                     if(operator.getCertainSlaveMap() != null) {
-                        operator.getCertainSlaveMap().put(SLAVE_ID_FIELD_NAME,new ArrayList<>() {{
+                        operator.getCertainSlaveMap().put(SLAVE_ID_FIELD_NAME,new ArrayList<String>() {{
                             add(id);
                         }});
                     }
